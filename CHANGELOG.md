@@ -2,7 +2,9 @@
 
 ## [Unreleased][unreleased]
 
-## [0.1.0][] - 2022-05-02
+- Create README.md
+
+## [0.1.0][] - 2022-05-08
 
 - Initial files (.gitignore, LICENSE)
 - Create `CHANGELOG.md`
