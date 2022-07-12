@@ -1,0 +1,36 @@
+{
+  "name": "hangmanbot",
+  "version": "0.2.0",
+  "description": "The implementation of the game Hangman in the form of a Discord bot",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nieopierzony/HangmanBot.git"
+  },
+  "keywords": [
+    "node-canvas",
+    "hangman",
+    "bot",
+    "discord",
+    "discord-js",
+    "node"
+  ],
+  "author": "Philipp Zelinski <philipp.zelinski@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nieopierzony/HangmanBot/issues"
+  },
+  "homepage": "https://github.com/nieopierzony/HangmanBot#readme",
+  "devDependencies": {
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "nodemon": "^2.0.19",
+    "prettier": "^2.7.1"
+  }
+}
