@@ -1,11 +1,18 @@
 "use strict";
 
-const S = require("fluent-json-schema");
+const { getAvatarPath } = require("@nieopierzony/hangman-drawer");
 const User = require("../models/User");
 const Game = require("../models/Game");
 const Word = require("../models/Word");
-const authHeaders = require("../schemas/authHeaders");
-const { unique, calculateGameExp, protect } = require("../helpers/util");
+const {
+  unique,
+  calculateGameExp,
+  protect,
+  calculateNeededExp,
+} = require("../helpers/util");
+const createCard = require("../helpers/drawer");
+
+const DEFAULT_ATTEMPTS = 6;
 
 const addUserExp = async (user, exp) => {
   console.log("ADD USER EXP", user, exp);
@@ -47,7 +54,6 @@ const games = async (fastify) => {
     // Find game in database
     const { id } = request.params;
     const game = await Game.findById(id).populate("user");
-    console.log(game);
     if (!game) return reply.notFound("Game not found");
     if (game?.isFinished) return reply.notFound("Game is finished");
     // Normalize guess (lowercase)
@@ -94,6 +100,45 @@ const games = async (fastify) => {
     //   headers: authHeaders,
     //   response: { 200: gameSchema.full, 404: errorSchema, 401: errorSchema },
     // },
+  });
+
+  const onGameGet = async (request, reply) => {
+    const { id } = request.params;
+    const game = await Game.findById(id).populate("user");
+    if (!game) return reply.notFound("Game not found");
+    const type = game.isFinished
+      ? game.attemptsLeft === 0
+        ? "lose"
+        : "win"
+      : "game";
+    const { word, mistakes, guessed, attemptsLeft, locale, experience } = game;
+    const { nickname, avatarId, id: userId, level, score } = game.user;
+    const avatarPath = await getAvatarPath(userId, avatarId);
+    const hangmanType = DEFAULT_ATTEMPTS - attemptsLeft;
+    const nextLevelExp = calculateNeededExp(level);
+    const options = {
+      type,
+      word,
+      mistakes,
+      guessed,
+      attemptsLeft,
+      locale,
+      nickname,
+      avatarPath,
+      hangmanType,
+      points: experience,
+      level,
+      nextLevelExp,
+      exp: score,
+    };
+    const buffer = await createCard(options);
+    reply.type("image/png").send(buffer);
+  };
+
+  fastify.route({
+    method: "GET",
+    path: "/games/:id",
+    handler: onGameGet,
   });
 };
 
