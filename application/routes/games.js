@@ -9,6 +9,7 @@ const Word = require('../models/Word');
 
 const DEFAULT_ATTEMPTS = 6;
 
+// TODO
 const addUserExp = (user, exp) => {
   console.log('ADD USER EXP', user, exp);
 };
