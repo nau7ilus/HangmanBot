@@ -1,29 +1,28 @@
-"use strict";
+'use strict';
 
-const fp = require("fastify-plugin");
-const Swagger = require("@fastify/swagger");
-const { version } = require("../package.json");
+const Swagger = require('@fastify/swagger');
+const fp = require('fastify-plugin');
+const { version } = require('../package.json');
 
 const swaggerGenerator = (fastify, opts, done) => {
   fastify.register(Swagger, {
-    exposeRoute: fastify.config.NODE_ENV !== "production",
-    routePrefix: "/documentation",
+    exposeRoute: fastify.config.NODE_ENV !== 'production',
+    routePrefix: '/documentation',
     swagger: {
       info: {
-        title: "Hangman Discord bot API",
-        description:
-          "The implementation of the game Hangman in the form of a Discord bot",
+        title: 'Hangman Discord bot API',
+        description: 'The implementation of the game Hangman in the form of a Discord bot',
         version,
       },
-      host: "localhost:3000",
-      schemes: ["http", "https"],
-      consumes: ["application/json"],
-      produces: ["application/json"],
+      host: 'localhost:3000',
+      schemes: ['http', 'https'],
+      consumes: ['application/json'],
+      produces: ['application/json'],
       securityDefinitions: {
         Bearer: {
-          type: "apiKey",
-          name: "Bearer",
-          in: "header",
+          type: 'apiKey',
+          name: 'Bearer',
+          in: 'header',
         },
       },
     },
@@ -31,4 +30,4 @@ const swaggerGenerator = (fastify, opts, done) => {
   done();
 };
 
-module.exports = fp(swaggerGenerator, { name: "swaggerGenerator" });
+module.exports = fp(swaggerGenerator, { name: 'swaggerGenerator' });

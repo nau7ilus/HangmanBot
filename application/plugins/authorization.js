@@ -1,26 +1,26 @@
-"use strict";
+'use strict';
 
-const fp = require("fastify-plugin");
+const fp = require('fastify-plugin');
 
-const authorization = (fastify, opts, done) => {
+const authorizationPlugin = (fastify, opts, done) => {
   const { httpErrors, config } = fastify;
-  const authorize = (request, reply, done) => {
+  const authorize = (request, reply, next) => {
     const { authorization } = request.headers;
     if (!authorization) {
-      throw httpErrors.unauthorized("Authorization header is required");
+      throw httpErrors.unauthorized('Authorization header is required');
     }
-    const [type, token] = authorization.split(" ");
-    if (type !== "Bearer") {
-      throw httpErrors.unauthorized("Authorization header is invalid");
+    const [type, token] = authorization.split(' ');
+    if (type !== 'Bearer') {
+      throw httpErrors.unauthorized('Authorization header is invalid');
     }
     if (token !== config.AUTH_TOKEN) {
-      throw httpErrors.unauthorized("Authorization header is invalid");
+      throw httpErrors.unauthorized('Authorization header is invalid');
     }
-    done();
+    next();
   };
 
-  fastify.decorate("authorize", authorize);
+  fastify.decorate('authorize', authorize);
   done();
 };
 
-module.exports = fp(authorization, { name: "authorization" });
+module.exports = fp(authorizationPlugin, { name: 'authorization' });

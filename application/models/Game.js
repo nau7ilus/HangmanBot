@@ -1,11 +1,11 @@
-"use strict";
+'use strict';
 
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
 const GameSchema = new Schema(
   {
-    user: { type: Schema.Types.ObjectId, ref: "users", required: true },
-    locale: { type: String, default: "ru", enum: ["ru", "de"] },
+    user: { type: Schema.Types.ObjectId, ref: 'users', required: true },
+    locale: { type: String, default: 'ru', enum: ['ru', 'de'] },
     word: { type: String, required: true },
     guessed: [{ type: String }],
     mistakes: [{ type: String }],
@@ -14,7 +14,7 @@ const GameSchema = new Schema(
     experience: { type: Number, default: 0 },
     finishedAt: { type: Date },
   },
-  { versionKey: false, timestamp: true }
+  { versionKey: false, timestamp: true },
 );
 
-module.exports = model("games", GameSchema);
+module.exports = model('games', GameSchema);
