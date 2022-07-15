@@ -1,8 +1,8 @@
 {
-  "name": "hangmanbot",
+  "name": "@nieopierzony/hangman-drawer",
   "version": "0.2.0",
   "description": "The implementation of the game Hangman in the form of a Discord bot",
-  "main": "hub.js",
+  "main": "drawer.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/index.js"
