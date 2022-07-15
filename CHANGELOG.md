@@ -2,7 +2,7 @@
 
 ## [Unreleased][unreleased]
 
-## [0.1.0][] - 2022-05-08
+## [0.2.0][] - 2022-07-15
 
 - Created README.md
 - Npm initialized
