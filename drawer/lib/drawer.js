@@ -15,10 +15,10 @@ const MISTAKES_FONT_COLOR = '#E84141';
 
 const ATTEMPTS_LEFT_FONT_COLOR = '#fff';
 const ATTEMPTS_LEFT_FONT_SIZE = 73;
-const ATTEMPS_LEFT_COORDS = [695, 723];
+const ATTEMPTS_LEFT_COORDS = [695, 723];
 
-const AVATAR_CHOORDS = [72, 658];
-const AVATAR_MASK_CHOORDS = [112, 698];
+const AVATAR_COORDS = [72, 658];
+const AVATAR_MASK_COORDS = [112, 698];
 const AVATAR_SIZE = [80, 80];
 
 const NICKNAME_MAX_LENGTH = 17;
@@ -44,7 +44,7 @@ const UNDERLINE_OFFSET = 25;
 const LOSE_CENTER_LETTER_Y = 435;
 const LOSE_TASK_LETTER_WIDTH = 39;
 const LOSE_TASK_FONT_SIZE = 50;
-const LOSE_TASK_UNGUESSED_COLOR = '#747F90';
+const LOSE_TASK_NOT_GUESSED_COLOR = '#747F90';
 const LOSE_TASK_LETTER_SPACE = 12;
 const LOSE_TASK_LETTER_OFFSET = -140;
 const LOSE_UNDERLINE_OFFSET = 15;
@@ -116,18 +116,18 @@ const addNickname = (ctx, nickname, isGame = true) => {
 const addAvatar = async (ctx, avatarPath) => {
   // Create circular clipping region
   ctx.beginPath();
-  ctx.arc(...AVATAR_MASK_CHOORDS, 40, 0, Math.PI * 2);
+  ctx.arc(...AVATAR_MASK_COORDS, 40, 0, Math.PI * 2);
   ctx.clip();
   // Draw avatar image inside
   const avatarImage = await loadImage(avatarPath);
-  ctx.drawImage(avatarImage, ...AVATAR_CHOORDS, ...AVATAR_SIZE);
+  ctx.drawImage(avatarImage, ...AVATAR_COORDS, ...AVATAR_SIZE);
   ctx.closePath();
 };
 
 const setAttemptsLeft = (ctx, attemptsLeft) => {
   setFontColor(ctx, ATTEMPTS_LEFT_FONT_COLOR);
   setFontSize(ctx, ATTEMPTS_LEFT_FONT_SIZE);
-  ctx.fillText(attemptsLeft, ...ATTEMPS_LEFT_COORDS);
+  ctx.fillText(attemptsLeft, ...ATTEMPTS_LEFT_COORDS);
 };
 
 const addHangman = (ctx, type) => {
@@ -155,11 +155,11 @@ const addWord = (ctx, word, guessed = guessed.toLowerCase(), isLose = false) => 
     const isGuessed = guessed.includes(letter.toLowerCase());
     // Draw the letter only if guessed
     if (isGuessed || isLose) {
-      if (isLose && !isGuessed) setFontColor(ctx, LOSE_TASK_UNGUESSED_COLOR);
+      if (isLose && !isGuessed) setFontColor(ctx, LOSE_TASK_NOT_GUESSED_COLOR);
       else setFontColor(ctx, TASK_FONT_COLOR);
       ctx.fillText(letter, x, centerY);
     }
-    // Draw the undeline
+    // Draw the underline
     const redOrGrey = isLose ? TASK_UNDERLINE_RED_COLOR : TASK_UNDERLINE_GREY_COLOR;
     const underlineColor = isGuessed ? TASK_UNDERLINE_GREEN_COLOR : redOrGrey;
     setFontColor(ctx, underlineColor);
