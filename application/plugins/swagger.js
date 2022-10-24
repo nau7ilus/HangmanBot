@@ -4,9 +4,11 @@ const Swagger = require('@fastify/swagger');
 const fp = require('fastify-plugin');
 const { version } = require('../package.json');
 
+const { NODE_ENV } = process.env;
+
 const swaggerGenerator = (fastify, opts, done) => {
   fastify.register(Swagger, {
-    exposeRoute: fastify.config.NODE_ENV !== 'production',
+    exposeRoute: NODE_ENV !== 'production',
     routePrefix: '/documentation',
     swagger: {
       info: {
