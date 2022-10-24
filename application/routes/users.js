@@ -5,7 +5,7 @@ const authHeaders = require('../schemas/authHeaders');
 const errorSchema = require('../schemas/error');
 const userSchema = require('../schemas/user');
 
-const users = (fastify) => {
+const users = (fastify, opts, done) => {
   const { authorize } = fastify;
   fastify.addHook('onRequest', authorize);
 
@@ -77,6 +77,8 @@ const users = (fastify) => {
       },
     },
   });
+
+  done();
 };
 
 module.exports = users;

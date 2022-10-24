@@ -3,7 +3,7 @@
 const S = require('fluent-json-schema');
 const { version } = require('../package.json');
 
-const status = (fastify) => {
+const status = (fastify, opts, done) => {
   const onStatus = () => ({ status: 'ok', version });
 
   fastify.route({
@@ -17,6 +17,8 @@ const status = (fastify) => {
       },
     },
   });
+
+  done();
 };
 
 module.exports = status;

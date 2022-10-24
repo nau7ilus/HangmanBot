@@ -14,7 +14,7 @@ const addUserExp = (user, exp) => {
   console.log('ADD USER EXP', user, exp);
 };
 
-const games = (fastify) => {
+const games = (fastify, opts, done) => {
   const { authorize } = fastify;
   fastify.addHook('onRequest', authorize);
 
@@ -124,6 +124,8 @@ const games = (fastify) => {
     path: '/games/:id',
     handler: onGameGet,
   });
+
+  done();
 };
 
 module.exports = games;

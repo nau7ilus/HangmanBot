@@ -11,7 +11,7 @@ const mongoose = require('mongoose');
 
 const { MONGO_URL } = process.env;
 
-module.exports = (fastify, opts) => {
+module.exports = (fastify, opts, done) => {
   mongoose
     .connect(MONGO_URL)
     .then(() => fastify.log.info('MongoDB connected'))
@@ -43,4 +43,6 @@ module.exports = (fastify, opts) => {
     dirNameRoutePrefix: false,
     options: Object.assign({}, opts),
   });
+
+  done();
 };
