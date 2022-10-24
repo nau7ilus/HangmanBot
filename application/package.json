@@ -34,11 +34,11 @@
   "dependencies": {
     "@fastify/autoload": "^5.1.0",
     "@fastify/cors": "^8.0.0",
-    "@fastify/env": "^4.0.0",
     "@fastify/sensible": "^5.1.0",
     "@fastify/swagger": "^7.4.1",
     "@fastify/under-pressure": "^7.0.0",
     "@nieopierzony/hangman-drawer": "^0.2.0",
+    "dotenv": "^16.0.3",
     "fastify-cli": "^4.3.0",
     "fastify-cors": "^6.1.0",
     "fastify-plugin": "^4.0.0",
