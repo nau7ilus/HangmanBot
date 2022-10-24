@@ -3,6 +3,7 @@
 ## [Unreleased][unreleased]
 
 - Separate library [@nieopierzony/hangman-drawer](https://www.npmjs.com/package/@nieopierzony/hangman-drawer)
+- [Drawer] Fixed typos in variable names
 
 ## [0.2.0][] - 2022-07-15
 
