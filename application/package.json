@@ -36,7 +36,7 @@
     "@fastify/cors": "^8.0.0",
     "@fastify/sensible": "^5.1.0",
     "@fastify/swagger": "^7.4.1",
-    "@fastify/under-pressure": "^7.0.0",
+    "@fastify/under-pressure": "^8.2.0",
     "@nieopierzony/hangman-drawer": "^0.2.0",
     "dotenv": "^16.0.3",
     "fastify-cli": "^4.3.0",
