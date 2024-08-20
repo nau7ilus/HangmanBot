@@ -1,21 +1,14 @@
 'use strict';
 
-const fs = require('node:fs');
+const fs = require('node:fs/promises');
 const path = require('node:path');
-const { promisify } = require('node:util');
-
-const readDirectory = promisify(fs.readdir);
-const readFile = promisify(fs.readFile);
-const lstat = promisify(fs.lstat);
-const writeFile = promisify(fs.writeFile);
-const exists = promisify(fs.exists);
 
 const findImages = async (prefix = '') => {
   const dirPath = path.join(__dirname, './assets', prefix);
-  const files = await readDirectory(dirPath);
+  const files = await fs.readdir(dirPath);
   const result = [];
   for await (const file of files) {
-    const stats = await lstat(`${dirPath}/${file}`);
+    const stats = await fs.lstat(`${dirPath}/${file}`);
     if (!stats?.isDirectory()) continue;
     const directoryImages = await findImages(path.join(prefix, file));
     result.push(...directoryImages);
@@ -40,4 +33,4 @@ const saveCanvasPNG = (canvas, filePath) =>
     out.on('finish', resolve);
   });
 
-module.exports = { readDirectory, readFile, lstat, writeFile, exists, findImages, addPath, saveCanvasPNG };
+module.exports = { findImages, addPath, saveCanvasPNG };
