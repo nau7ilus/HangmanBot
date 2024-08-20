@@ -1,5 +1,5 @@
 {
-  "name": "@nieopierzony/hangman-api",
+  "name": "@nau7ilus/hangman-api",
   "version": "0.1.0",
   "description": "",
   "main": "app.js",
@@ -13,15 +13,15 @@
     "node",
     "hangman"
   ],
-  "author": "Philipp Zelinski <philipp.zelinski@gmail.com>",
+  "author": "Filip Zielinski <filip.zelinskyi@proton.me>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nieopierzony/HangmanBot.git"
+    "url": "git+https://github.com/nau7ilus/HangmanBot.git"
   },
   "bugs": {
-    "url": "https://github.com/nieopierzony/HangmanBot/issues"
+    "url": "https://github.com/nau7ilus/HangmanBot/issues"
   },
-  "homepage": "https://github.com/nieopierzony/HangmanBot#readme",
+  "homepage": "https://github.com/nau7ilus/HangmanBot#readme",
   "license": "MIT",
   "devDependencies": {
     "eslint": "^8.19.0",

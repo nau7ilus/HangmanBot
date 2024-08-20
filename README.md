@@ -1,9 +1,9 @@
 <div align="center">
  
-[![hangman logo](https://i.imgur.com/Ibr2LhK.png)](https://github.com/nieopierzony/HangmanBot)
+[![hangman logo](https://i.imgur.com/Ibr2LhK.png)](https://github.com/nau7ilus/HangmanBot)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![Code size](https://img.shields.io/github/languages/code-size/nieopierzony/HangmanBot?style=flat)
-[![Last release](https://img.shields.io/github/v/release/nieopierzony/HangmanBot)](https://github.com/nieopierzony/HangmanBot/releases)
+![Code size](https://img.shields.io/github/languages/code-size/nau7ilus/HangmanBot?style=flat)
+[![Last release](https://img.shields.io/github/v/release/nau7ilus/HangmanBot)](https://github.com/nau7ilus/HangmanBot/releases)
 
 </div>
 
@@ -39,8 +39,8 @@ If you want to see the history of code changes, check CHANGELOG.md
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-See GitHub to see [contributions list](https://github.com/nieopierzony/HangmanBot/graphs/contributors)
+See GitHub to see [contributions list](https://github.com/nau7ilus/HangmanBot/graphs/contributors)
 
 ## License
 
-HangmanBot is licensed under [MIT](https://github.com/nieopierzony/HangmanBot/blob/main/LICENSE) license
+HangmanBot is licensed under [MIT](https://github.com/nau7ilus/HangmanBot/blob/main/LICENSE) license

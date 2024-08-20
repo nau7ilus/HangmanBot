@@ -1,5 +1,5 @@
 {
-  "name": "@nieopierzony/hangman-drawer",
+  "name": "@nau7ilus/hangman-drawer",
   "version": "0.2.0",
   "description": "The implementation of the game Hangman in the form of a Discord bot",
   "main": "drawer.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nieopierzony/HangmanBot.git"
+    "url": "git+https://github.com/nau7ilus/HangmanBot.git"
   },
   "keywords": [
     "node-canvas",
@@ -19,12 +19,12 @@
     "discord-js",
     "node"
   ],
-  "author": "Philipp Zelinski <philipp.zelinski@gmail.com>",
+  "author": "Filip Zielinski <filip.zelinskyi@proton.me>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nieopierzony/HangmanBot/issues"
+    "url": "https://github.com/nau7ilus/HangmanBot/issues"
   },
-  "homepage": "https://github.com/nieopierzony/HangmanBot#readme",
+  "homepage": "https://github.com/nau7ilus/HangmanBot#readme",
   "devDependencies": {
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
