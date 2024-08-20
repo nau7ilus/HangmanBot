@@ -1,14 +1,15 @@
 'use strict';
 
-const fs = require('node:fs/promises');
+const fs = require('node:fs');
+const fsPromises = require('node:fs/promises');
 const path = require('node:path');
 
 const findImages = async (prefix = '') => {
   const dirPath = path.join(__dirname, './assets', prefix);
-  const files = await fs.readdir(dirPath);
+  const files = await fsPromises.readdir(dirPath);
   const result = [];
   for await (const file of files) {
-    const stats = await fs.lstat(`${dirPath}/${file}`);
+    const stats = await fsPromises.lstat(`${dirPath}/${file}`);
     if (!stats?.isDirectory()) continue;
     const directoryImages = await findImages(path.join(prefix, file));
     result.push(...directoryImages);
