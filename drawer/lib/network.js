@@ -10,6 +10,7 @@ const buildAvatarUrl = (userId, avatarId) => `https://cdn.discordapp.com/avatars
 
 // TODO: Guild user avatars
 const getAvatarPath = async (userId, avatarId) => {
+  if (typeof avatarId !== 'string') avatarId = avatarId.toString();
   if (avatarId.length === 1) return fsPromises.readFile(`${DEFAULT_AVATARS_PATH}/${avatarId}.png`);
   const avatarPath = `${CACHED_AVATARS_PATH}/${avatarId}.png`;
   const isCached = await fs.existsSync(avatarPath);
