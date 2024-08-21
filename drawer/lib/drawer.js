@@ -113,13 +113,13 @@ const addNickname = (ctx, nickname, isGame = true) => {
   ctx.fillText(isGame ? lines.join('\n') : nickname, x, y);
 };
 
-const addAvatar = async (ctx, avatarPath) => {
+const addAvatar = async (ctx, avatar) => {
   // Create circular clipping region
   ctx.beginPath();
   ctx.arc(...AVATAR_MASK_COORDS, 40, 0, Math.PI * 2);
   ctx.clip();
   // Draw avatar image inside
-  const avatarImage = await loadImage(avatarPath);
+  const avatarImage = await loadImage(avatar);
   ctx.drawImage(avatarImage, ...AVATAR_COORDS, ...AVATAR_SIZE);
   ctx.closePath();
 };
@@ -170,14 +170,14 @@ const addWord = (ctx, word, guessed = guessed.toLowerCase(), isLose = false) => 
   ctx.textAlign = 'left';
 };
 
-const createGameCard = async ({ mistakes, nickname, avatarPath, attemptsLeft, hangmanType, word, guessed, locale }) => {
+const createGameCard = async ({ mistakes, nickname, avatar, attemptsLeft, hangmanType, word, guessed, locale }) => {
   const { canvas, ctx } = await initCanvas('game', locale);
   addMistakes(ctx, mistakes.join(' '));
   addNickname(ctx, nickname);
   setAttemptsLeft(ctx, attemptsLeft);
   addHangman(ctx, hangmanType);
   addWord(ctx, word, guessed);
-  await addAvatar(ctx, avatarPath);
+  await addAvatar(ctx, avatar);
   return canvas;
 };
 
@@ -215,23 +215,23 @@ const addRankInfo = (ctx, level, exp, nextLevelExp) => {
   roundRect(ctx, barStartX, RANK_BAR_Y, barWidth, RANK_BAR_HEIGHT, RANK_BAR_RADII);
 };
 
-const createWinCard = async ({ nickname, avatarPath, locale, level, exp, nextLevelExp, points, word }) => {
+const createWinCard = async ({ nickname, avatar, locale, level, exp, nextLevelExp, points, word }) => {
   const { canvas, ctx } = await initCanvas('win', locale);
   addRankInfo(ctx, level, exp, nextLevelExp);
   addPoints(ctx, points);
   addGuessedWord(ctx, word);
   addNickname(ctx, nickname, false);
-  await addAvatar(ctx, avatarPath);
+  await addAvatar(ctx, avatar);
   return canvas;
 };
 
-const createLoseCard = async ({ nickname, avatarPath, locale, level, exp, nextLevelExp, points, word, guessed }) => {
+const createLoseCard = async ({ nickname, avatar, locale, level, exp, nextLevelExp, points, word, guessed }) => {
   const { canvas, ctx } = await initCanvas('lose', locale);
   addRankInfo(ctx, level, exp, nextLevelExp);
   addPoints(ctx, points);
   addNickname(ctx, nickname, false);
   addWord(ctx, word, guessed, true);
-  await addAvatar(ctx, avatarPath);
+  await addAvatar(ctx, avatar);
   return canvas;
 };
 

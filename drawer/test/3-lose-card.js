@@ -1,15 +1,14 @@
 'use strict';
 
 const path = require('node:path');
-const { getAvatarPath, saveCanvasPNG, createLoseCard } = require('../drawer');
+const { downloadDiscordAvatar, saveCanvasPNG, createLoseCard } = require('../drawer');
 
-const USER_ID = null;
-const AVATAR_ID = 3;
+const AVATAR_URL = 'https://cdn.discordapp.com/avatars/876172866897448981/57695c6ec3d9f8f2ede0eb56d4704e6c.png?size=64';
 
 (async () => {
   const options = {
     nickname: 'HangmanDemoUser',
-    avatarPath: await getAvatarPath(USER_ID, AVATAR_ID),
+    avatar: await downloadDiscordAvatar(AVATAR_URL),
     locale: 'de',
     level: 1,
     exp: 30,
