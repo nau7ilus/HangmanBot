@@ -1,6 +1,6 @@
 {
   "name": "@nau7ilus/hangman-drawer",
-  "version": "0.2.0",
+  "version": "0.2.4",
   "description": "The implementation of the game Hangman in the form of a Discord bot",
   "main": "drawer.js",
   "scripts": {
