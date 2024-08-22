@@ -69,7 +69,7 @@ const RANK_BAR_Y = 720;
 const RANK_BAR_BG_COLOR = '#2A313A';
 const RANK_BAR_RADII = 5;
 
-let images = null;
+let preloadedImages = null;
 
 async function preload() {
   registerFont(path.join(__dirname, './assets/junegull.ttf'), { family: 'Junegull' });
@@ -77,16 +77,16 @@ async function preload() {
   const loadPromises = Object.values(foundImages).map((p) => loadImage(p));
   const loaded = await Promise.all(loadPromises);
   const imagesEntries = Object.keys(foundImages).map((k, i) => [k, loaded[i]]);
-  images = Object.fromEntries(imagesEntries);
+  preloadedImages = Object.fromEntries(imagesEntries);
 }
 
 async function initCanvas(type, locale) {
   // If the pictures have not loaded yet, do this
-  if (!images) await preload();
+  if (!preloadedImages) await preload();
   const canvas = createCanvas(WIDTH, HEIGHT);
   const ctx = canvas.getContext('2d');
   // Set background preset
-  const background = images[`base/${locale}/${type}Bg`];
+  const background = preloadedImages[`base/${locale}/${type}Bg`];
   ctx.drawImage(background, 0, 0);
   return { canvas, ctx };
 }
@@ -131,7 +131,7 @@ function setAttemptsLeft(ctx, attemptsLeft) {
 }
 
 function addHangman(ctx, type) {
-  const hangman = images[`sprites/${type}`];
+  const hangman = preloadedImages[`sprites/${type}`];
   ctx.drawImage(hangman, ...HANGMAN_COORDS);
 }
 
