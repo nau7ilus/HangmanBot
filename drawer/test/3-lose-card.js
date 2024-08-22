@@ -16,7 +16,7 @@ const AVATAR_ID = '57695c6ec3d9f8f2ede0eb56d4704e6c';
     nextLevelExp: 100,
     points: -340,
     word: 'hangman',
-    guessed: ['h', 'n'],
+    guesses: ['h', 'n'],
   };
 
   const gameCardCanvas = await createLoseCard(options);
