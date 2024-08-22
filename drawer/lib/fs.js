@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const fsPromises = require('node:fs/promises');
 const path = require('node:path');
 
-const findImages = async (prefix = '') => {
+async function findImages(prefix = '') {
   const dirPath = path.join(__dirname, './assets', prefix);
   const files = await fsPromises.readdir(dirPath);
   const result = [];
@@ -19,19 +19,20 @@ const findImages = async (prefix = '') => {
   const prefixedNames = prefix ? names.map((n) => `${prefix}/${n}`) : names;
   result.push(...prefixedNames);
   return result;
-};
+}
 
-const addPath = (prefix, format, paths) => {
+function addPath(prefix, format, paths) {
   const entries = paths.map((p) => [p, path.join(__dirname, prefix, `${p}.${format}`)]);
   return Object.fromEntries(entries);
-};
+}
 
-const saveCanvasPNG = (canvas, filePath) =>
-  new Promise((resolve) => {
+function saveCanvasPNG(canvas, filePath) {
+  return new Promise((resolve) => {
     const out = fs.createWriteStream(filePath);
     const stream = canvas.createPNGStream();
     stream.pipe(out);
     out.on('finish', resolve);
   });
+}
 
 module.exports = { findImages, addPath, saveCanvasPNG };

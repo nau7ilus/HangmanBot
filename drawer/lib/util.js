@@ -2,15 +2,23 @@
 
 const TEXT_LETTER_SPACE = 10;
 
-const isEven = (n) => n % 2 === 0;
+function isEven(n) {
+  return n % 2 === 0;
+}
 
-const fillString = (symbol, count) => Array(count).fill(symbol).join('');
+function fillString(symbol, count) {
+  return Array(count).fill(symbol).join('');
+}
 
-const setFontSize = (ctx, fontSize, fontFamily = 'Junegull') => (ctx.font = `${fontSize}px ${fontFamily}`);
+function setFontSize(ctx, fontSize, fontFamily = 'Junegull') {
+  ctx.font = `${fontSize}px ${fontFamily}`;
+}
 
-const setFontColor = (ctx, fontColor) => (ctx.fillStyle = fontColor);
+function setFontColor(ctx, fontColor) {
+  ctx.fillStyle = fontColor;
+}
 
-const getLines = (ctx, text, maxWidth, splitter = ' ') => {
+function getLines(ctx, text, maxWidth, splitter = ' ') {
   const words = text.split(splitter);
   const lines = [];
   let currentLine = [];
@@ -25,14 +33,26 @@ const getLines = (ctx, text, maxWidth, splitter = ' ') => {
   }
   lines.push(currentLine);
   return lines.map((l) => l.join(splitter));
-};
+}
 
-const alignTextByY = (lines, fontSize, y) => y - (lines.length - 1) * (fontSize - TEXT_LETTER_SPACE);
+function alignTextByY(lines, fontSize, y) {
+  return y - (lines.length - 1) * (fontSize - TEXT_LETTER_SPACE);
+}
 
-const setLetterSpacing = (lines = [], step = 1) =>
-  lines.map((l) => l.split(' ').join(fillString(String.fromCharCode(8202), step)));
+function setLetterSpacing(lines = [], step = 1) {
+  const THIN_SPACE_UTF16 = String.fromCharCode(8202);
+  const space = fillString(THIN_SPACE_UTF16, step);
 
-const roundRect = (ctx, x, y, width, height, radius) => {
+  const result = [...lines];
+  for (let i = 0; i < result.length; i++) {
+    const words = result[i].split(' ');
+    result[i] = words.join(space);
+  }
+
+  return result;
+}
+
+function roundRect(ctx, x, y, width, height, radius) {
   ctx.beginPath();
   ctx.moveTo(x + radius, y);
   ctx.lineTo(x + width - radius, y);
@@ -45,7 +65,7 @@ const roundRect = (ctx, x, y, width, height, radius) => {
   ctx.quadraticCurveTo(x, y, x + radius, y);
   ctx.closePath();
   ctx.fill();
-};
+}
 
 module.exports = {
   isEven,

@@ -71,16 +71,16 @@ const RANK_BAR_RADII = 5;
 
 let images = null;
 
-const preload = async () => {
+async function preload() {
   registerFont(path.join(__dirname, './assets/junegull.ttf'), { family: 'Junegull' });
   const foundImages = addPath('./assets', 'png', await findImages());
   const loadPromises = Object.values(foundImages).map((p) => loadImage(p));
   const loaded = await Promise.all(loadPromises);
   const imagesEntries = Object.keys(foundImages).map((k, i) => [k, loaded[i]]);
   images = Object.fromEntries(imagesEntries);
-};
+}
 
-const initCanvas = async (type, locale) => {
+async function initCanvas(type, locale) {
   // If the pictures have not loaded yet, do this
   if (!images) await preload();
   const canvas = createCanvas(WIDTH, HEIGHT);
@@ -89,17 +89,17 @@ const initCanvas = async (type, locale) => {
   const background = images[`base/${locale}/${type}Bg`];
   ctx.drawImage(background, 0, 0);
   return { canvas, ctx };
-};
+}
 
-const addMistakes = (ctx, mistakes) => {
+function addMistakes(ctx, mistakes) {
   setFontSize(ctx, MISTAKES_FONT_SIZE);
   setFontColor(ctx, MISTAKES_FONT_COLOR);
   const lines = getLines(ctx, mistakes, MAX_MISTAKES_WIDTH);
   const withSpacing = setLetterSpacing(lines, 5);
   ctx.fillText(withSpacing.join('\n'), ...MISTAKES_COORDS);
-};
+}
 
-const addNickname = (ctx, nickname, isGame = true) => {
+function addNickname(ctx, nickname, isGame = true) {
   const { length } = nickname;
   // If the nickname is too long, cut it
   if (length > NICKNAME_MAX_LENGTH) nickname = `${nickname.substring(0, NICKNAME_MAX_LENGTH)}…`;
@@ -111,9 +111,9 @@ const addNickname = (ctx, nickname, isGame = true) => {
   let [x, y] = isGame ? GAME_NICKNAME_COORDS : NICKNAME_COORDS;
   if (isGame) y = alignTextByY(lines, NICKNAME_FONT_SIZE, y);
   ctx.fillText(isGame ? lines.join('\n') : nickname, x, y);
-};
+}
 
-const addAvatar = async (ctx, avatar) => {
+async function addAvatar(ctx, avatar) {
   // Create circular clipping region
   ctx.beginPath();
   ctx.arc(...AVATAR_MASK_COORDS, 40, 0, Math.PI * 2);
@@ -122,20 +122,20 @@ const addAvatar = async (ctx, avatar) => {
   const avatarImage = await loadImage(avatar);
   ctx.drawImage(avatarImage, ...AVATAR_COORDS, ...AVATAR_SIZE);
   ctx.closePath();
-};
+}
 
-const setAttemptsLeft = (ctx, attemptsLeft) => {
+function setAttemptsLeft(ctx, attemptsLeft) {
   setFontColor(ctx, ATTEMPTS_LEFT_FONT_COLOR);
   setFontSize(ctx, ATTEMPTS_LEFT_FONT_SIZE);
   ctx.fillText(attemptsLeft, ...ATTEMPTS_LEFT_COORDS);
-};
+}
 
-const addHangman = (ctx, type) => {
+function addHangman(ctx, type) {
   const hangman = images[`sprites/${type}`];
   ctx.drawImage(hangman, ...HANGMAN_COORDS);
-};
+}
 
-const addWord = (ctx, word, guessed = guessed.toLowerCase(), isLose = false) => {
+function addWord(ctx, word, guessed = guessed.toLowerCase(), isLose = false) {
   setFontSize(ctx, isLose ? LOSE_TASK_FONT_SIZE : TASK_FONT_SIZE);
   ctx.textAlign = 'center';
   // Calculate the first letter's coordinates
@@ -168,9 +168,9 @@ const addWord = (ctx, word, guessed = guessed.toLowerCase(), isLose = false) => 
   }
   // Reset text alignment
   ctx.textAlign = 'left';
-};
+}
 
-const createGameCard = async ({ mistakes, nickname, avatar, attemptsLeft, hangmanType, word, guessed, locale }) => {
+async function createGameCard({ mistakes, nickname, avatar, attemptsLeft, hangmanType, word, guessed, locale }) {
   const { canvas, ctx } = await initCanvas('game', locale);
   addMistakes(ctx, mistakes.join(' '));
   addNickname(ctx, nickname);
@@ -179,25 +179,25 @@ const createGameCard = async ({ mistakes, nickname, avatar, attemptsLeft, hangma
   addWord(ctx, word, guessed);
   await addAvatar(ctx, avatar);
   return canvas;
-};
+}
 
-const addGuessedWord = (ctx, word) => {
+function addGuessedWord(ctx, word) {
   ctx.textAlign = 'center';
   setFontSize(ctx, GUESSED_WORD_FONT_SIZE);
   setFontColor(ctx, GUESSED_WORD_FONT_COLOR);
   ctx.fillText(word, ...GUESSED_WORD_COORDS);
   ctx.textAlign = 'left';
-};
+}
 
-const addPoints = (ctx, points) => {
+function addPoints(ctx, points) {
   const sign = points >= 0 ? '+' : '';
   const color = points >= 0 ? POINTS_GREEN : POINTS_RED;
   setFontColor(ctx, color);
   setFontSize(ctx, POINTS_FONT_SIZE);
   ctx.fillText(`${sign}${points}`, ...POINTS_COORDS);
-};
+}
 
-const addRankInfo = (ctx, level, exp, nextLevelExp) => {
+function addRankInfo(ctx, level, exp, nextLevelExp) {
   // Draw current level
   setFontSize(ctx, RANK_FONT_SIZE);
   setFontColor(ctx, RANK_FONT_COLOR);
@@ -213,9 +213,9 @@ const addRankInfo = (ctx, level, exp, nextLevelExp) => {
   roundRect(ctx, barStartX, RANK_BAR_Y, outsideBarWidth, RANK_BAR_HEIGHT, RANK_BAR_RADII);
   setFontColor(ctx, RANK_FONT_COLOR);
   roundRect(ctx, barStartX, RANK_BAR_Y, barWidth, RANK_BAR_HEIGHT, RANK_BAR_RADII);
-};
+}
 
-const createWinCard = async ({ nickname, avatar, locale, level, exp, nextLevelExp, points, word }) => {
+async function createWinCard({ nickname, avatar, locale, level, exp, nextLevelExp, points, word }) {
   const { canvas, ctx } = await initCanvas('win', locale);
   addRankInfo(ctx, level, exp, nextLevelExp);
   addPoints(ctx, points);
@@ -223,9 +223,9 @@ const createWinCard = async ({ nickname, avatar, locale, level, exp, nextLevelEx
   addNickname(ctx, nickname, false);
   await addAvatar(ctx, avatar);
   return canvas;
-};
+}
 
-const createLoseCard = async ({ nickname, avatar, locale, level, exp, nextLevelExp, points, word, guessed }) => {
+async function createLoseCard({ nickname, avatar, locale, level, exp, nextLevelExp, points, word, guessed }) {
   const { canvas, ctx } = await initCanvas('lose', locale);
   addRankInfo(ctx, level, exp, nextLevelExp);
   addPoints(ctx, points);
@@ -233,6 +233,6 @@ const createLoseCard = async ({ nickname, avatar, locale, level, exp, nextLevelE
   addWord(ctx, word, guessed, true);
   await addAvatar(ctx, avatar);
   return canvas;
-};
+}
 
 module.exports = { createGameCard, createWinCard, createLoseCard };

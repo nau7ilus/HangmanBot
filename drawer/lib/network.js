@@ -15,7 +15,7 @@ function buildAvatarUrl(userId, avatarId) {
   return `https://cdn.discordapp.com/avatars/${userId}/${avatarId}.png?size=64`;
 }
 
-const downloadDiscordAvatar = async (userId, avatarId) => {
+async function downloadDiscordAvatar(userId, avatarId) {
   if (!avatarId) {
     const defaultAvatarIndex = calculateUserDefaultAvatarIndex(userId);
     const defaultAvatarFilePath = path.join(DEFAULT_AVATAR_PATH, `${defaultAvatarIndex}.png`);
@@ -31,9 +31,9 @@ const downloadDiscordAvatar = async (userId, avatarId) => {
   }
 
   return fsPromises.readFile(cachedFilePath);
-};
+}
 
-const downloadImage = async (url, saveFilePath) => {
+async function downloadImage(url, saveFilePath) {
   const res = await fetch(url);
   const buffer = Buffer.from(await res.arrayBuffer());
 
@@ -47,6 +47,6 @@ const downloadImage = async (url, saveFilePath) => {
   }
 
   return buffer;
-};
+}
 
 module.exports = { downloadImage, downloadDiscordAvatar };
