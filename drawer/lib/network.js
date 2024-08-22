@@ -5,20 +5,28 @@ const fsPromises = require('node:fs/promises');
 const path = require('node:path');
 
 const CACHE_PATH = '.cache/avatars';
+const DEFAULT_AVATAR_PATH = 'lib/assets/defaultAvatars';
 
-// An avatar URL should look like this:
-// https://cdn.discordapp.com/avatars/{USER_ID}/{AVATAR_ID}.png?size=64
-// which can be easily created via
-// discord.js::GuildMember.displayAvatarURL({ extension: 'png', size: 64 })
-const downloadDiscordAvatar = async (avatarURL) => {
-  // For caching purpuses the avatar ID is being extracted from the provided URL
-  avatarURL = new URL(avatarURL);
-  const avatarId = path.basename(avatarURL.pathname, `.png`);
+function calculateUserDefaultAvatarIndex(userId) {
+  return Number(BigInt(userId) >> 22n) % 6;
+}
+
+function buildAvatarUrl(userId, avatarId) {
+  return `https://cdn.discordapp.com/avatars/${userId}/${avatarId}.png?size=64`;
+}
+
+const downloadDiscordAvatar = async (userId, avatarId) => {
+  if (!avatarId) {
+    const defaultAvatarIndex = calculateUserDefaultAvatarIndex(userId);
+    const defaultAvatarFilePath = path.join(DEFAULT_AVATAR_PATH, `${defaultAvatarIndex}.png`);
+    return fsPromises.readFile(defaultAvatarFilePath);
+  }
 
   const cachedFilePath = path.join(CACHE_PATH, `${avatarId}.png`);
   const isCached = fs.existsSync(cachedFilePath);
 
   if (!isCached) {
+    const avatarURL = buildAvatarUrl(userId, avatarId);
     await downloadImage(avatarURL, cachedFilePath);
   }
 
