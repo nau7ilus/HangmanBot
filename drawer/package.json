@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/nau7ilus/HangmanBot#readme",
   "devDependencies": {
-    "eslint": "^8.19.0",
+    "eslint": "^9.9.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
